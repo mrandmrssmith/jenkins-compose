@@ -1,0 +1,30 @@
+---
+version: "3.3"
+services:
+  jenkins:
+    container_name: jenkins
+    image: "jenkins/jenkins:lts-jdk11"
+    labels:
+     - "traefik.enable=true"
+     - "traefik.port=8080"
+     - "traefik.http.routers.jenkins.rule=Host(`${JENKINS_HOST}`)"
+     - "traefik.http.routers.jenkins.entrypoints=jenkins"
+    privileged: true
+    user: root
+    volumes:
+     - "${JENKINS_HOST}:/var/jenkins_home"
+     - /var/run/docker.sock:/var/run/docker.sock
+     - /usr/local/bin/docker:/usr/local/bin/docker
+  traefik:
+    image: "traefik:v2.6"
+    container_name: "traefik"
+    command:
+      - "--log.level=DEBUG"
+      - "--api=false"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.jenkins.address=:80"
+    ports:
+      - "80:80"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
