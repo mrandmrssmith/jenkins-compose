@@ -8,7 +8,7 @@ services:
       - "80:8080"
       - "50000:50000"
     privileged: true
-    user: jenkins
+    user: root
     volumes: 
      - ~/jenkins_configuration:/var/jenkins_home
      - /var/run/docker.sock:/var/run/docker.sock
