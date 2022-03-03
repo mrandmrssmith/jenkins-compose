@@ -1,15 +1,21 @@
 --- 
-version: "3"
+version: "3.3"
 services: 
   jenkins: 
     container_name: jenkins
     image: "jenkins/jenkins:lts-jdk11"
     ports: 
-      - "80:8080"
+      - "8080:8080"
       - "50000:50000"
     privileged: true
-    user: jenkins
+    user: root
     volumes: 
      - ~/jenkins_configuration:/var/jenkins_home
      - /var/run/docker.sock:/var/run/docker.sock
-     - /usr/local/bin/docker:/usr/local/bin/docker 
+     - /usr/local/bin/docker:/usr/local/bin/docker
+  nginx:
+    build: ./nginx
+    ports:
+      - 80:80
+    depends_on:
+      - jenkins 
