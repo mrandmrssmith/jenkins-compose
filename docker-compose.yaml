@@ -11,6 +11,7 @@ services:
      - "traefik.http.routers.jenkins.entrypoints=jenkins"
     privileged: true
     user: root
+    restart: unless-stopped
     volumes:
      - "${JENKINS_VOLUME}/jenkins_home:/var/jenkins_home"
      - /var/run/docker.sock:/var/run/docker.sock
@@ -27,5 +28,6 @@ services:
       - "80:80"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    restart: unless-stopped
     depends_on:
     - jenkins
