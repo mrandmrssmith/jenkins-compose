@@ -3,7 +3,7 @@ version: "3.3"
 services:
   jenkins:
     container_name: jenkins
-    image: "jenkins/jenkins:lts-jdk11"
+    image: "jenkins/jenkins:${JENKINS_TAG}"
     labels:
      - "traefik.enable=true"
      - "traefik.port=8080"
