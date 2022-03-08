@@ -14,8 +14,6 @@ services:
     volumes:
      - "${JENKINS_VOLUME}/jenkins_home:/var/jenkins_home"
      - /var/run/docker.sock:/var/run/docker.sock
-    depends_on:
-    - traefik
   traefik:
     image: "traefik:v2.6"
     container_name: "traefik"
@@ -29,3 +27,5 @@ services:
       - "80:80"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    depends_on:
+    - jenkins
