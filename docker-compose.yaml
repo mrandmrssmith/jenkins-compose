@@ -15,6 +15,7 @@ services:
     volumes:
      - "${JENKINS_VOLUME}/jenkins_home:/var/jenkins_home"
      - /var/run/docker.sock:/var/run/docker.sock
+     - /usr/bin/docker:/usr/bin/docker
   traefik:
     image: "traefik:v2.6"
     container_name: "traefik"
