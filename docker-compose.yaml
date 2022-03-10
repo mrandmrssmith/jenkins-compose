@@ -9,13 +9,16 @@ services:
      - "traefik.port=8080"
      - "traefik.http.routers.jenkins.rule=Host(`${JENKINS_HOST}`)"
      - "traefik.http.routers.jenkins.entrypoints=jenkins"
+    environment:
+     - JENKINS_HOME=${JENKINS_VOLUME}/jenkins_home
     privileged: true
     user: root
     restart: unless-stopped
     volumes:
-     - "${JENKINS_VOLUME}/jenkins_home:/var/jenkins_home"
+     - "${JENKINS_VOLUME}/jenkins_home:${JENKINS_VOLUME}/jenkins_home"
      - /var/run/docker.sock:/var/run/docker.sock
      - /usr/bin/docker:/usr/bin/docker
+     - /root/.docker/config.json:/root/.docker/config.json
   traefik:
     image: "traefik:v2.6"
     container_name: "traefik"
