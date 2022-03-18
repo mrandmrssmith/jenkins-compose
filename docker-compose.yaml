@@ -3,7 +3,7 @@ version: "3.3"
 services:
   jenkins:
     container_name: jenkins
-    image: "jenkins/jenkins:${JENKINS_TAG}"
+    image: "${JENKINS_IMAGE}:${JENKINS_TAG}"
     labels:
      - "traefik.enable=true"
      - "traefik.port=8080"
@@ -15,6 +15,7 @@ services:
     user: root
     restart: unless-stopped
     volumes:
+     - "${JENKINS_VOLUME}/jenkins_home:/var/lib/jenkins" #for backward compatibility with VMs
      - "${JENKINS_VOLUME}/jenkins_home:${JENKINS_VOLUME}/jenkins_home"
      - /var/run/docker.sock:/var/run/docker.sock
      - /usr/bin/docker:/usr/bin/docker
