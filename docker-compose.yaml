@@ -1,6 +1,17 @@
 ---
 version: "3.3"
 services:
+
+  db:
+    container_name: dbunittests
+    image: "${MYSQL_IMAGE}:${MYSQL_TAG}"
+    environment:
+      - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
+    volumes:
+      - "${DB_VOLUME}:/var/lib/mysql:rw"
+    ports:
+      - "3306:3306"
+
   jenkins:
     container_name: jenkins
     image: "${JENKINS_IMAGE}:${JENKINS_TAG}"
@@ -11,6 +22,8 @@ services:
      - "traefik.http.routers.jenkins.entrypoints=jenkins"
     environment:
      - JENKINS_HOME=${JENKINS_VOLUME}/jenkins_home
+     - JENKINS_JAVA_OPTS="-Djava.io.tmpdir=${JENKINS_VOLUME}/jenkins_home/tmp"
+     - JAVA_OPTS="-Djava.io.tmpdir=${JENKINS_VOLUME}/jenkins_home/tmp
     privileged: true
     user: root
     restart: unless-stopped
@@ -20,6 +33,7 @@ services:
      - /var/run/docker.sock:/var/run/docker.sock
      - /usr/bin/docker:/usr/bin/docker
      - /root/.docker/config.json:/root/.docker/config.json
+
   traefik:
     image: "traefik:v2.6"
     container_name: "traefik"
@@ -36,3 +50,4 @@ services:
     restart: unless-stopped
     depends_on:
     - jenkins
+  
