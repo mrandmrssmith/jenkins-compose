@@ -1,7 +1,6 @@
 ---
 version: "3.3"
 services:
-
   db:
     container_name: dbunittests
     image: "${MYSQL_IMAGE}:${MYSQL_TAG}"
@@ -12,7 +11,9 @@ services:
       - "${MYSQL_CONFIG}:/etc/mysql/my.cnf"
     ports:
       - "3306:3306"
-
+    logging:
+      driver: "local"
+  
   jenkins:
     container_name: jenkins
     image: "${JENKINS_IMAGE}:${JENKINS_TAG}"
@@ -34,6 +35,8 @@ services:
      - /var/run/docker.sock:/var/run/docker.sock
      - /usr/bin/docker:/usr/bin/docker
      - /root/.docker/config.json:/root/.docker/config.json
+    logging:
+      driver: "local"
 
   traefik:
     image: "traefik:v2.6"
@@ -51,4 +54,5 @@ services:
     restart: unless-stopped
     depends_on:
     - jenkins
-  
+    logging:
+      driver: "local"
