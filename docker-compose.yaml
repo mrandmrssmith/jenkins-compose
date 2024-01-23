@@ -13,7 +13,18 @@ services:
       - "3306:3306"
     logging:
       driver: "local"
-  
+
+  cassandra:
+    container_name: cassandra
+    image: "${CASSANDRA_IMAGE}:${CASSANDRA_TAG}"
+    volumes:
+      - "${CASSANDRA_VOLUME}:/var/lib/cassandra:rw"
+    ports:
+      - "9042:9042"
+      - "7000:7000"
+    logging:
+      driver: "local"
+
   jenkins:
     container_name: jenkins
     image: "${JENKINS_IMAGE}:${JENKINS_TAG}"
