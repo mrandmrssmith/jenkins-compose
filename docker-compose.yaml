@@ -36,7 +36,7 @@ services:
     environment:
      - JENKINS_HOME=${JENKINS_VOLUME}/jenkins_home
      - JENKINS_JAVA_OPTS="-Djava.io.tmpdir=${JENKINS_VOLUME}/jenkins_home/tmp"
-     - JAVA_OPTS="-Djava.io.tmpdir=${JENKINS_VOLUME}/jenkins_home/tmp
+     - JAVA_OPTS="-Djava.io.tmpdir=${JENKINS_VOLUME}/jenkins_home/tmp"
     privileged: true
     user: root
     restart: unless-stopped
