@@ -11,6 +11,7 @@ services:
       - "${MYSQL_CONFIG}:/etc/mysql/my.cnf"
     ports:
       - "3306:3306"
+    restart: unless-stopped
     logging:
       driver: "local"
 
@@ -22,6 +23,7 @@ services:
     ports:
       - "9042:9042"
       - "7000:7000"
+    restart: unless-stopped
     logging:
       driver: "local"
 
