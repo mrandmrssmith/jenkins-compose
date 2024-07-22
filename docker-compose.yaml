@@ -15,6 +15,17 @@ services:
     logging:
       driver: "local"
 
+  redis:
+    container_name: redis
+    image: "${REDIS_IMAGE}:${REDIS_TAG}"
+    volumes:
+      - "${REDIS_VOLUME}:/data:rw"
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    logging:
+      driver: "local"
+
   cassandra:
     container_name: cassandra
     image: "${CASSANDRA_IMAGE}:${CASSANDRA_TAG}"
